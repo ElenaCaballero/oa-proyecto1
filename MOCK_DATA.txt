@@ -1,0 +1,30 @@
+5	Rassvet
+79	Shuihu
+24748	Runjin
+8285	London
+7941	Pacobamba
+1	Araçatuba
+843	Puerto Padre
+863	Ciudad Bolívar
+61	Orange
+372	Tudela
+68703	Sanski Most
+8329	Mae Sai
+71	Freetown
+47	Weetombo
+56123	Ivry-sur-Seine
+11492	Nifuboko
+688	Pemzashen
+9	Quanjiang
+19025	Gornje Živinice
+91	Mainz
+8	Mendes
+1	Biting
+2333	Ramos West
+5	Balboa
+749	Pringsewu
+016	Kortkeros
+19291	Gällivare
+5932	Denyshi
+66	Kurumoch
+9972	Liancheng
