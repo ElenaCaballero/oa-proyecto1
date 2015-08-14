@@ -43,9 +43,11 @@ istream& operator>>(istream& input, Item& item){
 
 llamada Llamada();
 cliente leer_cliente();
+cuidad leer_cuidad();
+
 int main(int argc, char *argv[]){
 
-return 0;
+	return 0;
 }
 
 llamada Llamada(){
@@ -55,7 +57,7 @@ llamada Llamada(){
 	ifstream read_date; // lee las fechas y para no llenar la memoria con el random solo guarda el que necesita 
 	read_date.open("fecha.txt");
 	//nume random
-	int num=rand()%25; 
+	int num=rand()%62; 
 	char date[8];
 	int cont=0;
 	while(!read_date.eof()){
@@ -72,7 +74,7 @@ llamada Llamada(){
 	ifstream read_time; // lee las horas  y guarda 2  
 	read_time.open("hora.txt");
 	//nume random
-	int numa = rand()%100; 
+	int numa = rand()%156; 
 	char tiempo1[6];
 	char tiempo2[6];
 	int conta=0;
@@ -105,16 +107,17 @@ llamada Llamada(){
 	strcpy(call.final, llfin);
 
 	ifstream read_city; // guarda la cuidad
-	read_city.open("cuidad.txt");
+	read_city.open("MOCK_DATA.txt");
 	//nume random
 	int nume=rand()%100; 
 	char city[40];
+	int x;
 	int conte=0;
 	while(!read_city.eof()){
 		cont++;
 		if (nume==conte)
 		{
-			read_city >>call.destino; 
+			read_city >> x >> call.destino; 
 		}
 
 	}
@@ -122,19 +125,18 @@ llamada Llamada(){
 
 
 
-	ifstream read_number; // guarda la cuidad
-	read_number.open("numero.txt");
+	ifstream read_number; // guarda el numero
+	read_number.open("MOCK_DATA-3.txt");
 	//nume random
 	int numero=rand()%100; 
 
 	int contador=0;
-	while(!read_city.eof()){
+	while(!read_number.eof()){
 		cont++;
 		if (numero==contador)
 		{
-			read_city >> call.num; 
+			read_number >> call.num; 
 		}
-
 	}
 	read_number.close();
 
@@ -149,7 +151,7 @@ cliente leer_cliente(){
 	cliente person;
 	while(!read_person.eof()){
 		read_person >> person.id >> person.nombre >> person.id_cuidad >> person.gender;
-		}
+	}
 	// si queres aqui lo podes poner de un solo a que escriba en bin
 		return person;
 
