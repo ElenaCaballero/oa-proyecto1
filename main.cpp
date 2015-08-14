@@ -8,7 +8,7 @@ using namespace std;
 
 struct cliente{
     char id [13];
-	char nombre[4]
+	char nombre[4];
 	char id_cuidad [13];
 	char gender;
 };
@@ -20,9 +20,9 @@ struct linea_cliente{
 
 struct llamada{
     char  num [8];
-	char inicio [15];
-	char final [15];
-	char destino[40]	
+	char inicio [40];
+	char final [40];
+	char destino[40];	
 };
 
 
@@ -32,26 +32,27 @@ struct cuidad{
 };
 
 //Modificar parametros
-ostream& operator<<(ostream& output, const Item& item){
+/*ostream& operator<<(ostream& output, const Item& item){
 	output << item.name << "\t" << item.id << "\t" << item.price << "\t" << item.quantity << "\t" << item.available << "\t" << item.margin << endl;
 	return output;  
 }
 istream& operator>>(istream& input, Item& item){
 	 input >> item.name >> item.id >> item.price >> item.quantity >> item.available >> item.margin;
 	 return input;
-}
+}*/
 
-llamada llamada();
+llamada Llamada();
 cliente leer_cliente();
 int main(int argc, char *argv[]){
 
 return 0;
 }
 
-llamada llamada(){
+llamada Llamada(){
+	llamada call;
 	srand(time(0));
 
-	istream read_date; // lee las fechas y para no llenar la memoria con el random solo guarda el que necesita 
+	ifstream read_date; // lee las fechas y para no llenar la memoria con el random solo guarda el que necesita 
 	read_date.open("fecha.txt");
 	//nume random
 	int num=rand()%25; 
@@ -61,17 +62,17 @@ llamada llamada(){
 		cont++;
 		if (num==cont)
 		{
-			read_date >>date; 
+			read_date >> date; 
 		}
 
 	}
 	read_date.close();
 
 
-	istream read_time; // lee las horas  y guarda 2  
+	ifstream read_time; // lee las horas  y guarda 2  
 	read_time.open("hora.txt");
 	//nume random
-	int numarand()%100; 
+	int numa = rand()%100; 
 	char tiempo1[6];
 	char tiempo2[6];
 	int conta=0;
@@ -88,15 +89,22 @@ llamada llamada(){
 	}
 	read_time.close();
 
-	
-	strcpy(llamada.inicio,date);
-	strcat(llamada.inicio,tiempo1);
-	strcpy(llamada.final,date);
-	strcat(llamada.final,tiempo2);
+	char* llin = new char[strlen(date)+ strlen(tiempo1) + 1];
+	char* llfin = new char[strlen(date)+ strlen(tiempo1) + 1];
 
+	strcpy(llin, date);
+	strcat(llin, tiempo1);
 
+	//call.inicio = llin;
+	strcpy(call.inicio, llin);
 
-	istream read_city; // guarda la cuidad
+	strcpy(llfin, date);
+	strcat(llfin, tiempo2);
+
+	//call.final = llfin;
+	strcpy(call.final, llfin);
+
+	ifstream read_city; // guarda la cuidad
 	read_city.open("cuidad.txt");
 	//nume random
 	int nume=rand()%100; 
@@ -106,7 +114,7 @@ llamada llamada(){
 		cont++;
 		if (nume==conte)
 		{
-			read_city >>llamada.destino; 
+			read_city >>call.destino; 
 		}
 
 	}
@@ -114,7 +122,7 @@ llamada llamada(){
 
 
 
-	istream read_number; // guarda la cuidad
+	ifstream read_number; // guarda la cuidad
 	read_number.open("numero.txt");
 	//nume random
 	int numero=rand()%100; 
@@ -124,20 +132,18 @@ llamada llamada(){
 		cont++;
 		if (numero==contador)
 		{
-			read_city >>llamada.numero; 
+			read_city >> call.num; 
 		}
 
 	}
 	read_number.close();
 
-	llamada.
-
-	return llamada;
+	return call;
 }
 
 
 cliente leer_cliente(){
-	istream read_person; // lee lel archivo de texto , nose como lo guardas ahi solo lo modificas
+	ifstream read_person; // lee lel archivo de texto , nose como lo guardas ahi solo lo modificas
 	read_person.open("cliente.txt");
 	//nume random
 	cliente person;
@@ -153,7 +159,7 @@ cliente leer_cliente(){
 
 
 cuidad leer_cuidad(){
-	istream read_city; // lee lel archivo de texto , nose como lo guardas ahi solo lo modificas
+	ifstream read_city; // lee lel archivo de texto , nose como lo guardas ahi solo lo modificas
 	read_city.open("cuidad.txt");
 	
 	cuidad city;
