@@ -20,12 +20,15 @@ istream& operator>>(istream& input, Lineas& item){
 int main(int argc, char const *argv[]){
 	int cont;
 	Lineas item;
+	ofstream out;
+	out.open("lineas.txt");
 	ifstream file("linea.bin", ifstream::binary);
 	while(file.read(reinterpret_cast<char*>(&item), sizeof(item))){
-		
+		out << item << "\n";
 		cout << item << endl;
 	}
 	
+	out.close();
 	file.close();
 
 	return 0;

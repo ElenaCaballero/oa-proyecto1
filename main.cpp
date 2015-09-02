@@ -46,6 +46,17 @@ cliente leer_cliente();
 cuidad leer_cuidad();
 
 int main(int argc, char *argv[]){
+	llamada call;
+	call = Llamada();
+
+	ofstream outfile;
+   	outfile.open("llamada.bin", ifstream::binary);
+ 
+    while(cont < ){
+      	outfile.write(reinterpret_cast<const char*> (&call), sizeof(call));
+    }
+
+    outfile.close();
 
 	return 0;
 }

@@ -14,7 +14,7 @@ int main(int argc, char const *argv[]){
 	char data[20];
 
 	ifstream infile; 
-   	infile.open("MOCK_DATA.txt"); 
+   	infile.open("ciudades.txt"); 
 
    	ofstream outfile;
    	outfile.open("ciudad.bin", ifstream::binary);

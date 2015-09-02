@@ -22,12 +22,16 @@ istream& operator>>(istream& input, Cliente& item){
 int main(int argc, char const *argv[]){
 	int cont;
 	Cliente item;
+	ofstream out;
+	out.open("clientes.txt");
 	ifstream file("cliente.bin", ifstream::binary);
 	while(file.read(reinterpret_cast<char*>(&item), sizeof(item))){
 		
+		out << item << "\n";
 		cout << item << endl;
 	}
 	
+	out.close();
 	file.close();
 
 	return 0;
