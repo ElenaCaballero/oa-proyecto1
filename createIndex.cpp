@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdio.h>
-#include <fstream>  
+#include <fstream>
+#include <vector>  
 using namespace std;
 
 struct Index{
@@ -8,12 +9,14 @@ struct Index{
 	std::vector<int> reference;
 };
 
+#pragma pack(push, r1, 1)
 struct Cliente{
 	char idCliente[20];
 	char nombre[40];
 	char genero;
 	int idCity;
 };
+#pragma pack(pop, r1)
 
 struct Lineas{
   	char numero[20];
@@ -25,30 +28,59 @@ struct Ciudad{
 	char city[40];
 };
 
+/*ostream& operator<<(ostream& output, const Ciudad& item){
+	output << item.idCity << "\t" << item.city;
+	return output;  
+}*/
+
+ostream& operator<<(ostream& output, const Cliente& item){
+	output << item.idCliente << "\t" << item.nombre << "\t" << item.genero<< "\t" << item.idCity;
+	return output;  
+}
+
+/*ostream& operator<<(ostream& output, const Lineas& item){
+	output << item.numero << "\t" << item.idCliente;
+	return output;  
+}*/
+
 int menu();
 
 int main(int argc, char const *argv[]){
-	ifstream file;
+	
 	int op = menu();
 	if (op == 1){
 		Cliente item;
-		file.open("cliente.bin", ifstream::binary);
+		ifstream file("cliente.bin", ifstream::binary);
+		while(file.read(reinterpret_cast<char*>(&item), sizeof(item))){
+			
+			cout << item << endl;	
 
+		}
+
+		file.close();
 	}else if (op == 2){
 		Lineas item;
-		file.open("linea.bin", ifstream::binary);
+		ifstream file("linea.bin", ifstream::binary);
+		while(file.read(reinterpret_cast<char*>(&item), sizeof(item))){
+				
+		}
 
+		file.close();
 	}else if (op == 3){
 		Ciudad item;
-		file.open("ciudad.bin", ifstream::binary);
-		
+		ifstream file("ciudad.bin", ifstream::binary);
+		while(file.read(reinterpret_cast<char*>(&item), sizeof(item))){
+				
+		}
+
+		file.close();
 	} else if (op <= 0 || op > 3){
-		cout << "Ingrese una opcion existente";
+		cout << "Ingrese una opcion existente" << endl;
 		op = menu();
 	}
 
 
-
+	
 	return 0;
 }
 
