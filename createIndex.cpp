@@ -9,14 +9,12 @@ struct Index{
 	std::vector<int> reference;
 };
 
-#pragma pack(push, r1, 1)
 struct Cliente{
 	char idCliente[20];
 	char nombre[40];
 	char genero;
 	int idCity;
 };
-#pragma pack(pop, r1)
 
 struct Lineas{
   	char numero[20];
@@ -28,20 +26,20 @@ struct Ciudad{
 	char city[40];
 };
 
-/*ostream& operator<<(ostream& output, const Ciudad& item){
+ostream& operator<<(ostream& output, const Ciudad& item){
 	output << item.idCity << "\t" << item.city;
 	return output;  
-}*/
+}
 
 ostream& operator<<(ostream& output, const Cliente& item){
 	output << item.idCliente << "\t" << item.nombre << "\t" << item.genero<< "\t" << item.idCity;
 	return output;  
 }
 
-/*ostream& operator<<(ostream& output, const Lineas& item){
+ostream& operator<<(ostream& output, const Lineas& item){
 	output << item.numero << "\t" << item.idCliente;
 	return output;  
-}*/
+}
 
 int menu();
 
@@ -62,7 +60,7 @@ int main(int argc, char const *argv[]){
 		Lineas item;
 		ifstream file("linea.bin", ifstream::binary);
 		while(file.read(reinterpret_cast<char*>(&item), sizeof(item))){
-				
+			cout << item << endl;	
 		}
 
 		file.close();
@@ -70,7 +68,7 @@ int main(int argc, char const *argv[]){
 		Ciudad item;
 		ifstream file("ciudad.bin", ifstream::binary);
 		while(file.read(reinterpret_cast<char*>(&item), sizeof(item))){
-				
+			cout << item << endl;	
 		}
 
 		file.close();
