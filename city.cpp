@@ -19,7 +19,8 @@ int main(int argc, char const *argv[]){
    	ofstream outfile;
    	outfile.open("ciudad.bin", ifstream::binary);
  
-    while(infile >> ciudad.idCity >> ciudad.city){
+    for(int i = 0; i<30; i++){
+    	infile >> ciudad.idCity >> ciudad.city;
       outfile.write(reinterpret_cast<const char*> (&ciudad), sizeof(ciudad));
     }
 

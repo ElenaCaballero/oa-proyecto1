@@ -8,15 +8,15 @@ using namespace std;
 
 
 struct cliente{
-	    char id [13];
-		char nombre[4];
-		char id_cuidad [13];
+	    char id [20];
+		char nombre[40];
 		char gender;
+		int id_cuidad;
 	};
 
 	struct linea_cliente{
-		char num [8];
-		char id_cliente [13];
+		char num [20];
+		char id_cliente [20];
 		
 	};
 
@@ -30,7 +30,7 @@ struct cliente{
 
 
 	struct cuidad{
-		char id [13];
+		int id ;
 		char nombre[40];
 		
 	};
