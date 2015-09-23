@@ -16,13 +16,25 @@
 		int number;
 	};
  int menu2();
-int main (int argc, char *argv[]){
+ int main (int argc, char *argv[]){
 		
 		bool flag = true;
 	 	while (flag)
 	 	{
-	 		switch(menu2()){
-				case 1: // Agregar
+	 		cout << "1. Agregar "  << endl;
+			cout << "2. Borrar "  << endl;
+			cout << "3. Listar " << endl;
+			cout << "4. Modificar " << endl;
+			cout << "5. Buscar con indice " << endl;
+			cout << "6. Buscar sin indice  " << endl;
+			cout << "7. Reindexar  " << endl;
+			cout << "8. Crear Archivo" << endl;
+			cout << "9. Salir" << endl;
+			cout << endl << "Opcion? ";
+			int menu;
+			cin>>menu;
+	 		if(menu==1){// Agregar
+				 
 					Header head;
 					ifstream in("ciudades.bin",ios::binary|ios::in); //lee el avail
 			
@@ -83,9 +95,7 @@ int main (int argc, char *argv[]){
 					}						
 					out.close();
 
-				break;
-
-				case 2: // Borrar
+				}else if(menu==2){ // Borrar
 						 Header head;
 						Ciudad ciudad;
 						ifstream in("ciudades.bin",ios::binary|ios::in);
@@ -124,9 +134,9 @@ int main (int argc, char *argv[]){
 							out.write(reinterpret_cast<char*>(&(head.number)), sizeof(int));
 							out.close();
 						}
-				break;
+				
 
-				case 3: //LIstar
+				}else if(menu==3){ //LIstar
 					Header head;
 					ifstream in("ciudades.bin",ios::binary|ios::in);
 			
@@ -145,28 +155,19 @@ int main (int argc, char *argv[]){
 					}
 					in.close();
 
-				break;
-
-				case 4: // Modificar
+				}else if(menu==4){ // Modificar
 						           					
-						           					cliente person;
-						           					cout<< "Ingrese ID, nombre"<<endl;
-						           					//cin>>cliente.id >> "\t" >> cliente.nombre >> "\t" >> cliente.id_cuidad >> "\t" >>icliente.gender;
+						           					
 
-				break;
+				}else if(menu==5){
 
-				case 5: // Buscar con indice
+				
 
-				break;
+				}else if(menu==6){// buscar sin indice
 
-				case 6: // buscar sin indice
+				}else if(menu==7){ // Reindexar
 
-				break;
-
-				case 7: // Reindexar
-
-				break;
-				case 8: // crear el archivo
+				}else if(menu==8){ // crear el archivo
 					ifstream in("ciudades.txt",ios::in);
 					ofstream out("ciudades.bin",ios::binary|ios::out|ios::app);
 					Header head;
@@ -201,11 +202,13 @@ int main (int argc, char *argv[]){
 
 						out.close();
 					}
-				in.close();
+					in.close();
 
-				break;
+				}else if(menu==8){ 
+					break;
+				}
 
-			} 
+			 
 		}	
 	return 0;
 
