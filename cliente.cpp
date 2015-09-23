@@ -172,13 +172,16 @@
 			
 					Cliente cliente;
 					//ifstream in("lineas.bin",ios::binary|ios::in);
-					while(!in.eof()){
-						in.read(reinterpret_cast<char*>(&(cliente.idCliente)), 20);
-						in.read(reinterpret_cast<char*>(&(cliente.nombre)), 40);
-						in.read(reinterpret_cast<char*>(&(cliente.genero)), sizeof(char));
-						in.read(reinterpret_cast<char*>(&(cliente.idcity)), sizeof(int));
+					while(in.read(reinterpret_cast<char*>(&cliente), sizeof(cliente))){
+						
+
+						int num = atoi(cliente.idCliente);
+						if (num>0)
+						{
+							cout << cliente.idCliente<<" "<<cliente.nombre<<cliente.genero<<" "<<cliente.idcity<<endl;
+						}
 				
-						cout << cliente.idCliente<<" "<<cliente.nombre<<cliente.genero<<" "<<cliente.idcity<<endl;
+						
 					}
 					in.close();
 

@@ -149,15 +149,49 @@
 			
 					Ciudad ciudad;
 					while(in.read(reinterpret_cast<char*>(& ciudad), sizeof(ciudad))){
+						if (ciudad.id>0)
+						{
+							cout << ciudad.id <<" "<<ciudad.nombre<<endl;
+						} 
 				
-						cout << ciudad.id<<" entro "<<ciudad.nombre<<endl;
+						
 	
 					}
 					in.close();
 
 				}else if(menu==4){ // Modificar
-						           					
-						           					
+					Header head;
+						Ciudad ciudad;
+						ifstream in("ciudades.bin",ios::binary|ios::in);
+						in.read(reinterpret_cast<char*>(&(head.avail)), sizeof(int)); // leee el header
+						in.read(reinterpret_cast<char*>(&(head.number)), sizeof(int));
+						//in.close();
+
+						
+						cout<<"Ingrese posicion a elimanar"<<endl;
+						int rrn;
+						cin>>rrn;
+
+						if (rrn>head.number||rrn<0) // valida que el rrn o posicion a borrar sea valida
+						{
+							cout<<"La posicion ingresada no es valida"<<endl;
+						} else {
+	
+							int ecuacion;
+							ecuacion=8+(sizeof(ciudad)*(rrn-1)); // dara la poscion a donde se marcara
+							in.seekg(ecuacion,ios::beg);
+							in.read(reinterpret_cast<char*>(&ciudad), sizeof(ciudad));
+							Ciudad ciudad2;
+							cout<<"Ingrese el nombre de la ciudad"<<endl;
+							cin>>ciudad2.nombre;
+							
+							fstream out("ciudades.bin",ios::binary|ios::out|ios::in);
+							out.seekp(ecuacion,ios::beg); //lo marca y pone el proximo lo sobre escribe
+							out.write(reinterpret_cast<char*>(&(ciudad.id)), sizeof(int));
+							out.write(reinterpret_cast<char*>(&(ciudad.nombre)), 40);
+
+							
+						}			
 
 				}else if(menu==5){
 

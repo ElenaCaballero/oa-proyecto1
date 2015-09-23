@@ -160,10 +160,15 @@
 			
 					linea_cliente linea;
 					//ifstream in("lineas.bin",ios::binary|ios::in);
-					while(!in.eof()){
-						in.read(reinterpret_cast<char*>(&(linea.num)), 20);
-						in.read(reinterpret_cast<char*>(&(linea.id_cliente)), 20);
-						cout << linea.num<<" "<<linea.id_cliente<<endl;
+					while(in.read(reinterpret_cast<char*>(& linea), sizeof(linea))){
+						//in.read(reinterpret_cast<char*>(&(linea.num)), 20);
+						//in.read(reinterpret_cast<char*>(&(linea.id_cliente)), 20);
+						int num = atoi(linea.num);
+						if (num>0)
+						{
+							cout << linea.num<<" "<<linea.id_cliente<<endl;
+						}
+						
 					}
 					in.close();
 
