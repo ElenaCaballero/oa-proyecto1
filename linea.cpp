@@ -121,10 +121,17 @@
 							if (head.avail==-1)
 							{
 								//linea.num = itoa(head.avail);
-								linea.num=itoa (head.avail,linea.num,10);
+								stringstream ss;
+  								ss << head.avail;
+  								strcpy(linea.num,ss.str().c_str());
+								//linea.num=ss;
+
 							}else{
 								//linea.num= itoa(head.avail*-1);
-								linea.num=itoa (head.avail*-1,linea.num,10);
+								stringstream ss;
+  								ss << head.avail*-1;
+  								strcpy(linea.num,ss.str().c_str());
+								
 							}
 							fstream out("lineas.bin",ios::binary|ios::out|ios::in);
 							out.seekp(ecuacion,ios::beg); //lo marca y pone el proximo lo sobre escribe
