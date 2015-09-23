@@ -15,8 +15,8 @@ struct cliente{
 	};
 
 	struct linea_cliente{
-		char num [20];
-		char id_cliente [20];
+		char num [8];
+		char id_cliente [13];
 		
 	};
 
