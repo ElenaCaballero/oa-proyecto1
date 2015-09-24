@@ -179,13 +179,28 @@ ostream& operator<<(ostream& output, const Index& item){
 	return output;  
 }
 
+ostream& operator<<(ostream& output, const Ciudad& item){
+	output << item.id << "\t" << item.nombre;
+	return output;  
+}
+
+ostream& operator<<(ostream& output, const Cliente& item){
+	output << item.idCliente << "\t" << item.nombre << "\t" << item.genero<< "\t" << item.idCity;
+	return output;  
+}
+
+ostream& operator<<(ostream& output, const linea_cliente& item){
+	output << item.num << "\t" << item.id_cliente;
+	return output;  
+}
+
 int menu();
 int menu2();
 
 int main(int argc, char const *argv[])
 {
 	int o = menu2();
-	if(o == 1){
+	if(o == 1){//Borrar---------------------------------------------------
 		int op = menu();
 		if (op == 1){
 			char id[20];
@@ -260,15 +275,117 @@ int main(int argc, char const *argv[])
 			cout << "Ingrese una opcion existente" << endl;
 			op = menu();
 		}
-	}else if(o == 2){
-		char id[20];
-		cout << "Ingrese el índice a borrar" << endl;
-		cin >> id;
-	}else if(o == 3){
-		
-	}else if (op <= 0 || op > 3){
+	}else if(o == 2){//Buscar---------------------------------------------------------
+		int op = menu();
+		if (op == 1){
+			BTree arbol;
+			int count;
+
+			Index item;
+			ifstream file("index2Clientes.bin", ifstream::binary);
+			while(file.read(reinterpret_cast<char*>(&item), sizeof(item))){
+				arbol.insertar(item.key[count]);
+				count++;
+			}
+
+			char id[20];
+			cout << "Ingrese el índice a buscar" << endl;
+			cin >> id;
+
+			arbol.buscar(id);
+
+			file.close();
+		}else if (op == 2){
+			BTree arbol;
+			int count;
+
+			Index item;
+			ifstream file("index2Lineas.bin", ifstream::binary);
+			while(file.read(reinterpret_cast<char*>(&item), sizeof(item))){
+				arbol.insertar(item.key[count]);
+				count++;
+			}
+
+			char id[20];
+			cout << "Ingrese el índice a buscar" << endl;
+			cin >> id;
+
+			arbol.buscar(id);
+
+			file.close();
+		}else if (op == 3){
+			BTree arbol;
+			int count;
+
+			Index item;
+			ifstream file("index2Ciudades.bin", ifstream::binary);
+			while(file.read(reinterpret_cast<char*>(&item), sizeof(item))){
+				arbol.insertar(item.key[count]);
+				count++;
+			}
+
+			char id[20];
+			cout << "Ingrese el índice a buscar" << endl;
+			cin >> id;
+
+			arbol.buscar(id);
+
+			file.close();
+		} else if (op <= 0 || op > 3){
+			cout << "Ingrese una opcion existente" << endl;
+			op = menu();
+		}
+	}else if(o == 3){//Listar-------------------------------------------
+		int op = menu();
+		if (op == 1){
+			BTree arbol;
+			int count;
+
+			Index item;
+			ifstream file("index2Clientes.bin", ifstream::binary);
+			while(file.read(reinterpret_cast<char*>(&item), sizeof(item))){
+				arbol.insertar(item.key[count]);
+				count++;
+			}
+
+			arbol.inorder();
+
+			file.close();
+		}else if (op == 2){
+			BTree arbol;
+			int count;
+
+			Index item;
+			ifstream file("index2Lineas.bin", ifstream::binary);
+			while(file.read(reinterpret_cast<char*>(&item), sizeof(item))){
+				arbol.insertar(item.key[count]);
+				count++;
+			}
+
+			arbol.inorder();
+
+			file.close();
+		}else if (op == 3){
+			BTree arbol;
+			int count;
+
+			Index item;
+			ifstream file("index2Ciudades.bin", ifstream::binary);
+			while(file.read(reinterpret_cast<char*>(&item), sizeof(item))){
+				arbol.insertar(item.key[count]);
+				count++;
+			}
+
+			arbol.inorder();
+
+			file.close();
+		} else if (op <= 0 || op > 3){
+			cout << "Ingrese una opcion existente" << endl;
+			op = menu();
+		}
+	}else if (o <= 0 || o > 3){
 		cout << "Ingrese una opcion existente" << endl;
-		op = menu();
+		o = menu();
 	}
 
 	
