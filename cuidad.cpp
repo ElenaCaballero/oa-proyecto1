@@ -146,12 +146,15 @@
 					
 			
 					in.seekg(8,ios::beg);      
-			
+					//falta que no lea negativo
 					Ciudad ciudad;
 					while(in.read(reinterpret_cast<char*>(& ciudad), sizeof(ciudad))){
-				
-						cout << ciudad.id<<" entro "<<ciudad.nombre<<endl;
+					if (ciudad.id>0)
+					{
+						cout << ciudad.id<<" "<<ciudad.nombre<<endl;
 	
+					}
+						
 					}
 					in.close();
 
@@ -189,6 +192,7 @@
 							out.close();
 						}
 						in.close();	           					
+						           		           					
 						           					
 
 				}else if(menu==5){
@@ -210,16 +214,14 @@
 					cin>>temp;
 					Ciudad ciudad;
 					while(in.read(reinterpret_cast<char*>(& ciudad), sizeof(ciudad))){
-				
-						if (temp==cuidad.id)
-						{
-							cout << ciudad.id<<" "<<ciudad.nombre<<endl;
-						}
-						
+					if (ciudad.id==temp)
+					{
+						cout << ciudad.id<<"  "<<ciudad.nombre<<endl;
 	
 					}
+						
+					}
 					in.close();
-
 
 				}else if(menu==7){ // Reindexar
 
