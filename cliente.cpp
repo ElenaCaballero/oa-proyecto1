@@ -186,7 +186,44 @@
 					in.close();
 
 				}else if(menu==4){ // Modificar
-						           					
+					Header head;
+						Cliente cliente; 
+						ifstream in("lineas.bin",ios::binary|ios::in);
+						in.read(reinterpret_cast<char*>(&(head.avail)), sizeof(int)); // leee el header
+						in.read(reinterpret_cast<char*>(&(head.number)), sizeof(int));
+						in.close();
+
+						
+						cout<<"Ingrese posicion a modificar"<<endl;
+						int rrn;
+						cin>>rrn;
+
+						if (rrn>head.number||rrn<0) // valida que el rrn o posicion a borrar sea valida
+						{
+							cout<<"La posicion ingresada no es valida"<<endl;
+						} else {
+	
+							int ecuacion;
+							ecuacion=8+(sizeof(cliente)*(rrn-1)); // dara la poscion a donde se marcara
+							Cliente cliente2;
+							in.seekg(ecuacion,ios::beg);
+							in.read(reinterpret_cast<char*>(&cliente2), sizeof(cliente2));
+							cout<<"Ingrese nuevo nombre, genro[f/m], id cuidad "<<endl;
+							cin>>cliente.nombre;
+							cin>>cliente.genero;
+							cin>>cliente.idcity;
+							fstream out("cliente.bin",ios::binary|ios::out|ios::in);
+							out.seekp(ecuacion,ios::beg); //lo marca y pone el proximo lo sobre escribe
+							out.write(reinterpret_cast<char*>(&(cliente2.idCliente)), 20);
+							out.write(reinterpret_cast<char*>(&(cliente.nombre)), 40);
+							out.write(reinterpret_cast<char*>(&(cliente.genero)), sizeof(char));
+							out.write(reinterpret_cast<char*>(&(cliente.idcity)), sizeof(int));
+				
+
+						
+							out.close();
+						}
+						in.close();	           					
 						           					
 
 				}else if(menu==5){

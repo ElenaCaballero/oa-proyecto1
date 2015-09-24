@@ -149,12 +149,8 @@
 			
 					Ciudad ciudad;
 					while(in.read(reinterpret_cast<char*>(& ciudad), sizeof(ciudad))){
-						if (ciudad.id>0)
-						{
-							cout << ciudad.id <<" "<<ciudad.nombre<<endl;
-						} 
 				
-						
+						cout << ciudad.id<<" entro "<<ciudad.nombre<<endl;
 	
 					}
 					in.close();
@@ -165,10 +161,10 @@
 						ifstream in("ciudades.bin",ios::binary|ios::in);
 						in.read(reinterpret_cast<char*>(&(head.avail)), sizeof(int)); // leee el header
 						in.read(reinterpret_cast<char*>(&(head.number)), sizeof(int));
-						//in.close();
+						
 
 						
-						cout<<"Ingrese posicion a elimanar"<<endl;
+						cout<<"Ingrese posicion a Modificar"<<endl;
 						int rrn;
 						cin>>rrn;
 
@@ -180,18 +176,20 @@
 							int ecuacion;
 							ecuacion=8+(sizeof(ciudad)*(rrn-1)); // dara la poscion a donde se marcara
 							in.seekg(ecuacion,ios::beg);
-							in.read(reinterpret_cast<char*>(&ciudad), sizeof(ciudad));
 							Ciudad ciudad2;
-							cout<<"Ingrese el nombre de la ciudad"<<endl;
-							cin>>ciudad2.nombre;
+							in.read(reinterpret_cast<char*>(&ciudad2), sizeof(ciudad2));
 							
 							fstream out("ciudades.bin",ios::binary|ios::out|ios::in);
+							cout<<"Ingrese el nuevo nombre"<<endl;
+							cin>>ciudad.nombre;
 							out.seekp(ecuacion,ios::beg); //lo marca y pone el proximo lo sobre escribe
-							out.write(reinterpret_cast<char*>(&(ciudad.id)), sizeof(int));
+							out.write(reinterpret_cast<char*>(&(ciudad2.id)), sizeof(int));
 							out.write(reinterpret_cast<char*>(&(ciudad.nombre)), 40);
 
-							
-						}			
+							out.close();
+						}
+						in.close();	           					
+						           					
 
 				}else if(menu==5){
 
