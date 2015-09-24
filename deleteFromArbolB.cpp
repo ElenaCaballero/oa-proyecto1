@@ -7,7 +7,7 @@
 using namespace std;
 
 class BTreeNode{
-	unsigned int *llaves;	//arreglo de llaves
+	char* llaves[2*5-1];	//arreglo de llaves
 	int o;			//orden del arbol
 	BTreeNode **C;	//arreglo de hijos
 	int n;		//el numero de llaves que contiene
@@ -15,9 +15,9 @@ class BTreeNode{
 public:
 	BTreeNode(bool _hoja);	// constructor
 	void inorder();	//para recorrer arbol
-	void insertarNoLleno(int k); //para insertar a un nodo que no está lleno
+	void insertarNoLleno(char k[40]); //para insertar a un nodo que no está lleno
 	void dividirHijo(int i, BTreeNode *y); //para dividir el hijo del nodo
-	BTreeNode *buscar(int k); //para buscar una llave 
+	BTreeNode *buscar(char k[40]); //para buscar una llave 
 
 	friend class BTree;
 };
@@ -28,15 +28,15 @@ class BTree{
 public:
 	BTree(){raiz = NULL;  o = 5; } //constructor
 	void inorder(){if (raiz != NULL) raiz->inorder(); } // para recorrer el arbol
-	BTreeNode* buscar(int k){return (raiz == NULL)? NULL : raiz->buscar(k); } // para buscar una llave
-	void insertar(int k); // para insertar al arbol
+	BTreeNode* buscar(char k[40]){return (raiz == NULL)? NULL : raiz->buscar(k); } // para buscar una llave
+	void insertar(char k[40]); // para insertar al arbol
 };
 
 BTreeNode::BTreeNode(bool hoja1){
 	o = 5;	//el orden del arbol será 5
 	hoja = hoja1;
 
-	llaves = new unsigned int[2*o-1];
+	//llaves = new char[2*o-1];
     C = new BTreeNode *[2*o];
 
     n = 0;	//inicialmente no contiene llaves
@@ -54,7 +54,7 @@ void BTreeNode::inorder(){
         C[i]->inorder();
 }
 
-BTreeNode *BTreeNode::buscar(int k){
+BTreeNode *BTreeNode::buscar(char k[40]){
 	int i = 0;
 	while(i < n && k > llaves[i]){	//buscar la primera llave mayor que k
 		i++;
@@ -69,7 +69,7 @@ BTreeNode *BTreeNode::buscar(int k){
     return C[i]->buscar(k); //ir al hijo correspondiente
 }
 
-void BTree::insertar(int k){
+void BTree::insertar(char k[40]){
 	if (raiz == NULL){	//si el arbol esta vacio
 		raiz = new BTreeNode(true);
 		raiz->llaves[0] = k;	//agregamos la llave
@@ -93,7 +93,7 @@ void BTree::insertar(int k){
 
 }
 
-void BTreeNode::insertarNoLleno(int k){
+void BTreeNode::insertarNoLleno(char k[40]){
 	int i = n-1; //el indice es el indice del elemento mas a la derecha
 	if(hoja == true){	//si el nodo actual es una hoja
 		while (i >= 0 && llaves[i] > k){
@@ -147,90 +147,8 @@ void BTreeNode::dividirHijo(int i, BTreeNode *y){
     n = n + 1;
 }
 
-struct Cliente{
-	char idCliente[20];
-	char nombre[40];
-	char genero;
-	int idCity;
-};
-
-struct linea_cliente{
-  	char num[20];
-	char id_cliente[20];
-};
-
-struct Ciudad{
-  	int id;
-	char nombre[40];
-};
-
-ostream& operator<<(ostream& output, const Ciudad& item){
-	output << item.id << "\t" << item.nombre;
-	return output;  
-}
-
-ostream& operator<<(ostream& output, const Cliente& item){
-	output << item.idCliente << "\t" << item.nombre << "\t" << item.genero<< "\t" << item.idCity;
-	return output;  
-}
-
-ostream& operator<<(ostream& output, const linea_cliente& item){
-	output << item.num << "\t" << item.id_cliente;
-	return output;  
-}
-
-int menu();
-
-int main(){
-	BTree arbol;
-
-	ofstream ifile;
-	ifile.open("index2.bin", ofstream::binary);
-
-	int op = menu();
-	if (op == 1){
-		Cliente item;
-		ifstream file("cliente.bin", ifstream::binary);
-		while(file.read(reinterpret_cast<char*>(&item), sizeof(item))){
-			arbol.insertar(atoi(item.idCliente));
-		}
-		file.close();
-	}else if (op == 2){
-		linea_cliente item;
-		ifstream file("linea.bin", ifstream::binary);
-		while(file.read(reinterpret_cast<char*>(&item), sizeof(item))){
-			arbol.insertar(atoi(item.num));
-		}
-		file.close();
-	}else if (op == 3){
-		Ciudad item;
-		ifstream file("ciudad.bin", ifstream::binary);
-		while(file.read(reinterpret_cast<char*>(&item), sizeof(item))){
-			arbol.insertar(item.id);
-		}
-		file.close();
-	} else if (op <= 0 || op > 3){
-		cout << "Ingrese una opcion existente" << endl;
-		op = menu();
-	}
-
-	//cout << "tree" << endl;
-	//arbol.inorder();
-
-	//int k = 94045734;
-    //(arbol.buscar(k) != NULL)? cout << "\nPresent" : cout << "\nNot Present";
-
-	ifile.write(reinterpret_cast<const char*> (&arbol), sizeof(arbol));
-	ifile.close();
+int main(int argc, char const *argv[])
+{
+	
 	return 0;
-}
-
-int menu(){
-	int op = 0;
-	cout << "Seleccione el archivo a indexar: " << endl;
-	cout << "1. Clientes" << endl;
-	cout << "2. Lineas Telefónicas" << endl;
-	cout << "3. Ciudades" << endl;
-	cin >> op;
-	return op;
 }

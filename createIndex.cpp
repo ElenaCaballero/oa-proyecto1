@@ -8,7 +8,7 @@ using namespace std;
 
 struct Index{
 	std::vector<char*> key;		//vector de llaves
-	std::vector<int> reference;		//vector de referencias
+	int reference;		//vector de referencias
 };
 
 struct Cliente{
@@ -46,62 +46,67 @@ ostream& operator<<(ostream& output, const linea_cliente& item){
 int menu();
 
 int main(int argc, char const *argv[]){
-	Index indexfile;
-	ofstream ifile;
-	ifile.open("index.bin", ofstream::binary);
-
+	
 	int count = 1;
 	int op = menu();
 	if (op == 1){
+		Index indexfile;
+
+		ofstream ifile;
+		ifile.open("indexClientes.bin", ofstream::binary);
+
 		Cliente item;
 		ifstream file("cliente.bin", ifstream::binary);
 		while(file.read(reinterpret_cast<char*>(&item), sizeof(item))){
-			//cout << item.idCliente << endl;	
 			indexfile.key.push_back(item.idCliente);
-			indexfile.reference.push_back(count);
+			indexfile.reference = count;
 			count++;
 		}
-		for (const auto& e : indexfile.reference)
-		  	std::cout << e << endl;
-		std::cout << std::endl;
+
+		ifile.write(reinterpret_cast<const char*> (&indexfile), sizeof(indexfile)); // insertando los indices al archivo de indices
 
 		file.close();
+		ifile.close();
 	}else if (op == 2){
+		Index indexfile;
+
+		ofstream ifile;
+		ifile.open("indexLineas.bin", ofstream::binary);
+
 		linea_cliente item;
 		ifstream file("linea.bin", ifstream::binary);
 		while(file.read(reinterpret_cast<char*>(&item), sizeof(item))){
-			//cout << item << endl;	
 			indexfile.key.push_back(item.num);
-			indexfile.reference.push_back(count);
+			indexfile.reference = count;
 			count++;
 		}
-		for (const auto& e : indexfile.key)
-		  	std::cout << e << endl;
-		std::cout << std::endl;
+
+		ifile.write(reinterpret_cast<const char*> (&indexfile), sizeof(indexfile)); // insertando los indices al archivo de indices
 
 		file.close();
+		ifile.close();
 	}else if (op == 3){
+		Index indexfile;
+
+		ofstream ifile;
+		ifile.open("indexCiudades.bin", ofstream::binary);
+
 		Ciudad item;
 		ifstream file("ciudad.bin", ifstream::binary);
 		while(file.read(reinterpret_cast<char*>(&item), sizeof(item))){
-			//cout << item << endl;
 			//indexfile.key.push_back(item.id);	
-			indexfile.reference.push_back(count);
+			indexfile.reference = count;
 			count++;
 		}
-		for (const auto& e : indexfile.key)
-		  	std::cout << e << endl;
-		std::cout << std::endl;
+
+		ifile.write(reinterpret_cast<const char*> (&indexfile), sizeof(indexfile)); // insertando los indices al archivo de indices
 
 		file.close();
+		ifile.close();
 	} else if (op <= 0 || op > 3){
 		cout << "Ingrese una opcion existente" << endl;
 		op = menu();
 	}
-
-	ifile.write(reinterpret_cast<const char*> (&indexfile), sizeof(indexfile)); // insertando los indices al archivo de indices
-
-	ifile.close();
 	
 	return 0;
 }
