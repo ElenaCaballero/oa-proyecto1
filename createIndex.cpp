@@ -9,6 +9,11 @@ using namespace std;
 struct Index{
 	std::vector<char*> key;		//vector de llaves
 	int reference;		//vector de referencias
+
+	bool operator < (const Index& str) const
+    {
+        return (key < str.key);
+    }
 };
 
 struct Cliente{
@@ -61,9 +66,11 @@ int main(int argc, char const *argv[]){
 			indexfile.key.push_back(item.idCliente);
 			indexfile.reference = count;
 			count++;
-		}
 
-		ifile.write(reinterpret_cast<const char*> (&indexfile), sizeof(indexfile)); // insertando los indices al archivo de indices
+			std::sort(indexfile.key.begin(), indexfile.key.end());
+
+			ifile.write(reinterpret_cast<const char*> (&indexfile), sizeof(indexfile));
+		}
 
 		file.close();
 		ifile.close();
@@ -79,9 +86,10 @@ int main(int argc, char const *argv[]){
 			indexfile.key.push_back(item.num);
 			indexfile.reference = count;
 			count++;
-		}
+			std::sort(indexfile.key.begin(), indexfile.key.end());
 
-		ifile.write(reinterpret_cast<const char*> (&indexfile), sizeof(indexfile)); // insertando los indices al archivo de indices
+			ifile.write(reinterpret_cast<const char*> (&indexfile), sizeof(indexfile)); 
+		}
 
 		file.close();
 		ifile.close();
@@ -97,9 +105,11 @@ int main(int argc, char const *argv[]){
 			//indexfile.key.push_back(item.id);	
 			indexfile.reference = count;
 			count++;
-		}
 
-		ifile.write(reinterpret_cast<const char*> (&indexfile), sizeof(indexfile)); // insertando los indices al archivo de indices
+			std::sort(indexfile.key.begin(), indexfile.key.end());
+
+			ifile.write(reinterpret_cast<const char*> (&indexfile), sizeof(indexfile)); 
+		}
 
 		file.close();
 		ifile.close();

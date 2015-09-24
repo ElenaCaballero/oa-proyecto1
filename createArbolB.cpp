@@ -213,11 +213,11 @@ int main(){
 		ifstream file("cliente.bin", ifstream::binary);
 		while(file.read(reinterpret_cast<char*>(&item), sizeof(item))){
 			arbol.insertar(item.idCliente);
+
+			ifile.write(reinterpret_cast<const char*> (&arbol), sizeof(arbol));
 		}
 
 		arbol.inorder();
-
-		ifile.write(reinterpret_cast<const char*> (&arbol), sizeof(arbol));
 
 		ifile.close();
 		file.close();
@@ -231,9 +231,9 @@ int main(){
 		ifstream file("linea.bin", ifstream::binary);
 		while(file.read(reinterpret_cast<char*>(&item), sizeof(item))){
 			arbol.insertar(item.num);
-		}
 
-		ifile.write(reinterpret_cast<const char*> (&arbol), sizeof(arbol));
+			ifile.write(reinterpret_cast<const char*> (&arbol), sizeof(arbol));
+		}
 
 		ifile.close();
 		file.close();
@@ -248,11 +248,11 @@ int main(){
 		while(file.read(reinterpret_cast<char*>(&item), sizeof(item))){
 			char id[10];
 			arbol.insertar(strcpy(id,itoa(item.id,10).c_str()));
+
+			ifile.write(reinterpret_cast<const char*> (&arbol), sizeof(arbol));
 		}
 
 		arbol.inorder();
-
-		ifile.write(reinterpret_cast<const char*> (&arbol), sizeof(arbol));
 
 		ifile.close();
 		file.close();
