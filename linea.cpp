@@ -1,4 +1,4 @@
-	#include <iostream>
+#include <iostream>
 	#include <fstream>
 	#include <string.h>
 	#include <sstream>
@@ -7,15 +7,16 @@
 
 	using namespace std;
 
-	struct Ciudad{
-		int id;
-		char nombre[40];
+	struct linea_cliente{
+		char num [20];
+		char id_cliente [20];
+		
 	};
 	struct Header{
 		int avail;
 		int number;
 	};
- int menu2();
+ 
  int main (int argc, char *argv[]){
 		
 		bool flag = true;
@@ -36,20 +37,20 @@
 	 		if(menu==1){// Agregar
 				 
 					Header head;
-					ifstream in("ciudades.bin",ios::binary|ios::in); //lee el avail
+					ifstream in("lineas.bin",ios::binary|ios::in); //lee el avail
 			
 					in.read(reinterpret_cast<char*>(&(head.avail)), sizeof(int));
 					in.read(reinterpret_cast<char*>(&(head.number)), sizeof(int));
 			
 
-					cout<<"Ingrese id nombre"<<endl;
-					Ciudad ciudad; 
-					Ciudad ciudad2; //pide los datos que se ingresaran
-					cin>>ciudad.id;
-					cin>>ciudad.nombre;
-					cout << ciudad.id<<" "<<ciudad.nombre<<endl;
+					cout<<"Ingrese Numero y id"<<endl;
+					linea_cliente linea; 
+					linea_cliente linea2; //pide los datos que se ingresaran
+					cin>>linea.num;
+					cin>>linea.id_cliente;
+					//cout << ciudad.id<<" "<<ciudad.nombre<<endl;
 
-					fstream out("ciudades.bin",ios::binary|ios::out|ios::in);
+					fstream out("lineas.bin",ios::binary|ios::out|ios::in);
 					int ecuacion,rrn,cont;
 					rrn=head.avail;
 					cont=head.number;
@@ -58,11 +59,11 @@
 		
 					if (rrn==-1)
 					{
-						ecuacion=8+(sizeof(ciudad)*cont);
+						ecuacion=8+(sizeof(linea_cliente)*cont);
 						out.seekp(ecuacion,ios::beg);
 				
-						out.write(reinterpret_cast<char*>(&(ciudad.id)), sizeof(int));
-						out.write(reinterpret_cast<char*>(&(ciudad.nombre)), 40);
+						out.write(reinterpret_cast<char*>(&(linea.num)), 20);
+						out.write(reinterpret_cast<char*>(&(linea.id_cliente)), 20);
 				
 
 						cont++; 
@@ -71,23 +72,24 @@
 						out.write(reinterpret_cast<char*>(&(head)), sizeof(Header));
 					}else{
 					
-						ecuacion=8+(sizeof(ciudad)*(rrn-1)); // da la posicion donde debe escribirse
+						ecuacion=8+(sizeof(linea)*(rrn-1)); // da la posicion donde debe escribirse
 						in.seekg(ecuacion,ios::beg);
-						in.read(reinterpret_cast<char*>(&ciudad2), sizeof(ciudad2)); // lee el registro que se encuentra en pos
-						cout<<" el id de cuidad "<< ciudad2.id<<endl;
-						if (ciudad2.id==-1)
+						in.read(reinterpret_cast<char*>(&linea2), sizeof(linea2)); // lee el registro que se encuentra en pos
+						//cout<<" el id de cuidad "<< ciudad2.id<<endl;
+						int num = atoi(linea.num);
+						if (num==-1)
 						{
 							head.avail=-1;
 
 						} else{
-							head.avail=(ciudad2.id*-1); // toma el siguiente y asigna al avail
+							head.avail=(num*-1); // toma el siguiente y asigna al avail
 							cout<<"el head avail"<< head.avail<<endl;
 						}
 				
 						in.close();
 						out.seekp(ecuacion,ios::beg);
-						out.write(reinterpret_cast<char*>(&(ciudad.id)), sizeof(int)); // escribe el archivo
-						out.write(reinterpret_cast<char*>(&(ciudad.nombre)), 40);
+						out.write(reinterpret_cast<char*>(&(linea.num)), 20); // escribe el archivo
+						out.write(reinterpret_cast<char*>(&(linea.id_cliente)), 20);
 						out.seekp(0,ios::beg);
 						out.write(reinterpret_cast<char*>(&(head.avail)), sizeof(int)); // escribe el header
 						out.write(reinterpret_cast<char*>(&(head.number)), sizeof(int));
@@ -97,8 +99,8 @@
 
 				}else if(menu==2){ // Borrar
 						 Header head;
-						Ciudad ciudad;
-						ifstream in("ciudades.bin",ios::binary|ios::in);
+						linea_cliente linea; 
+						ifstream in("lineas.bin",ios::binary|ios::in);
 						in.read(reinterpret_cast<char*>(&(head.avail)), sizeof(int)); // leee el header
 						in.read(reinterpret_cast<char*>(&(head.number)), sizeof(int));
 						in.close();
@@ -114,18 +116,27 @@
 						} else {
 	
 							int ecuacion;
-							ecuacion=8+(sizeof(ciudad)*(rrn-1)); // dara la poscion a donde se marcara
+							ecuacion=8+(sizeof(linea)*(rrn-1)); // dara la poscion a donde se marcara
 							
 							if (head.avail==-1)
 							{
-								ciudad.id=head.avail;
+								//linea.num = itoa(head.avail);
+								stringstream ss;
+  								ss << head.avail;
+  								strcpy(linea.num,ss.str().c_str());
+								//linea.num=ss;
+
 							}else{
-								ciudad.id=head.avail*-1;
+								//linea.num= itoa(head.avail*-1);
+								stringstream ss;
+  								ss << head.avail*-1;
+  								strcpy(linea.num,ss.str().c_str());
+								
 							}
-							fstream out("ciudades.bin",ios::binary|ios::out|ios::in);
+							fstream out("lineas.bin",ios::binary|ios::out|ios::in);
 							out.seekp(ecuacion,ios::beg); //lo marca y pone el proximo lo sobre escribe
-							out.write(reinterpret_cast<char*>(&(ciudad.id)), sizeof(int));
-							out.write(reinterpret_cast<char*>(&(ciudad.nombre)), 40);
+							out.write(reinterpret_cast<char*>(&(linea.num)), 20);
+							out.write(reinterpret_cast<char*>(&(linea.id_cliente)), 20);
 
 							head.avail=rrn;
 
@@ -138,7 +149,7 @@
 
 				}else if(menu==3){ //LIstar
 					Header head;
-					ifstream in("ciudades.bin",ios::binary|ios::in);
+					ifstream in("lineas.bin",ios::binary|ios::in);
 			
 					in.read(reinterpret_cast<char*>(&(head.avail)), sizeof(int));
 					in.read(reinterpret_cast<char*>(&(head.number)), sizeof(int));
@@ -147,22 +158,22 @@
 			
 					in.seekg(8,ios::beg);      
 			
-					Ciudad ciudad;
-					while(in.read(reinterpret_cast<char*>(& ciudad), sizeof(ciudad))){
-				
-						cout << ciudad.id<<" entro "<<ciudad.nombre<<endl;
-	
+					linea_cliente linea;
+					//ifstream in("lineas.bin",ios::binary|ios::in);
+					while(!in.eof()){
+						in.read(reinterpret_cast<char*>(&(linea.num)), 20);
+						in.read(reinterpret_cast<char*>(&(linea.id_cliente)), 20);
+						cout << linea.num<<" "<<linea.id_cliente<<endl;
 					}
 					in.close();
 
 				}else if(menu==4){ // Modificar
 					Header head;
-						Ciudad ciudad;
-						ifstream in("ciudades.bin",ios::binary|ios::in);
+						linea_cliente linea; 
+						ifstream in("lineas.bin",ios::binary|ios::in);
 						in.read(reinterpret_cast<char*>(&(head.avail)), sizeof(int)); // leee el header
 						in.read(reinterpret_cast<char*>(&(head.number)), sizeof(int));
-						
-
+						//
 						
 						cout<<"Ingrese posicion a Modificar"<<endl;
 						int rrn;
@@ -174,21 +185,21 @@
 						} else {
 	
 							int ecuacion;
-							ecuacion=8+(sizeof(ciudad)*(rrn-1)); // dara la poscion a donde se marcara
+							ecuacion=8+(sizeof(linea)*(rrn-1)); // dara la poscion a donde se marcara
+							linea linea2;
 							in.seekg(ecuacion,ios::beg);
-							Ciudad ciudad2;
-							in.read(reinterpret_cast<char*>(&ciudad2), sizeof(ciudad2));
-							
-							fstream out("ciudades.bin",ios::binary|ios::out|ios::in);
-							cout<<"Ingrese el nuevo nombre"<<endl;
-							cin>>ciudad.nombre;
+							in.read(reinterpret_cast<char*>(&linea2), sizeof(linea));
+							cout<<"Ingrese nuedo ID de cliente"<<endl;
+							cin>>linea.id_cliente;
+							fstream out("lineas.bin",ios::binary|ios::out|ios::in);
 							out.seekp(ecuacion,ios::beg); //lo marca y pone el proximo lo sobre escribe
-							out.write(reinterpret_cast<char*>(&(ciudad2.id)), sizeof(int));
-							out.write(reinterpret_cast<char*>(&(ciudad.nombre)), 40);
+							out.write(reinterpret_cast<char*>(&(linea2.num)), 20);
+							out.write(reinterpret_cast<char*>(&(linea.id_cliente)), 20);
 
 							
 						}
-						in.close();	           					
+						in.close();
+	           					
 						           					
 
 				}else if(menu==5){
@@ -200,11 +211,11 @@
 				}else if(menu==7){ // Reindexar
 
 				}else if(menu==8){ // crear el archivo
-					ifstream in("ciudades.txt",ios::in);
-					ofstream out("ciudades.bin",ios::binary|ios::out|ios::app);
+					ifstream in("lineas.txt",ios::in);
+					ofstream out("lineas.bin",ios::binary|ios::out|ios::app);
 					Header head;
 					head.avail=-1;
-					head.number=30;
+					head.number=750;
 
 					out.write(reinterpret_cast<char*>(&(head.avail)), sizeof(int));
 					out.write(reinterpret_cast<char*>(&(head.number)), sizeof(int));
@@ -214,28 +225,27 @@
 						string linea;
 						getline(in,linea);
 						cout<<linea<<endl;
-						char id[3];
-						for(int  i = 0; i<2; i++){
-							id[i] = linea[i];
+						char num[9];
+						for(int  i = 0; i<8; i++){
+							num[i] = linea[i];
 						}
-						id[2] = '\0';
-						char nombre[40];
+						num[8] = '\0';
+						char id_cliente[14];
 						int j = 0;
-						for(int  i = 2; i<linea.length(); i++){
-						nombre[j] = linea[i];
-						j++;
+						for(int  i = 8; i<linea.length(); i++){
+							id_cliente[j] = linea[i];
+							j++;
 						}
-						nombre[j] = '\0';
-						ofstream out("ciudades.bin",ios::binary|ios::out|ios::app);
-						int temp =atoi(id);
-						cout<<temp<<" "<<nombre<<endl;
-						out.write(reinterpret_cast<char*>(&temp), sizeof(int));
-						out.write(reinterpret_cast<char*>(&nombre), 40);
+						id_cliente[j] = '\0';
+						ofstream out("lineas.bin",ios::binary|ios::out|ios::app);
+			
+						cout<<num<<" "<<id_cliente<<endl;
+						out.write(reinterpret_cast<char*>(&num), 20);
+						out.write(reinterpret_cast<char*>(&id_cliente), 20);
 
 						out.close();
-					}
-					in.close();
-
+						}
+						in.close();
 				}else if(menu==8){ 
 					break;
 				}
@@ -245,21 +255,3 @@
 	return 0;
 
 }
-
-
-
-
-	int menu2(){
-		cout << "1. Agregar "  << endl;
-		cout << "2. Borrar "  << endl;
-		cout << "3. Listar " << endl;
-		cout << "4. Modificar " << endl;
-		cout << "5. Buscar con indice " << endl;
-		cout << "6. Buscar sin indice  " << endl;
-		cout << "7. Reindexar  " << endl;
-		cout << "8. Crear Archivo" << endl;
-		cout << endl << "Opcion? ";
-		int opcion;
-		cin >> opcion;
-		return opcion;
-	}
