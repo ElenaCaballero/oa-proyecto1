@@ -201,8 +201,12 @@
 
 							out.close();
 						}
+<<<<<<< HEAD
 						in.close();
 
+=======
+						in.close();	           					
+>>>>>>> 4079f5caa7216d9493d775e83c5492c3aa06ecba
 						           					
 
 				}else if(menu==5){

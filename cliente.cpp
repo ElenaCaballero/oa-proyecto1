@@ -32,7 +32,11 @@
 			cout << "6. Buscar sin indice  " << endl;
 			cout << "7. Reindexar  " << endl;
 			
+<<<<<<< HEAD
 			cout << "8. Salir" << endl;
+=======
+			cout << "9. Salir" << endl;
+>>>>>>> 4079f5caa7216d9493d775e83c5492c3aa06ecba
 			cout << endl << "Opcion? ";
 			int menu;
 			cin>>menu;
@@ -231,6 +235,7 @@
 				
 
 				}else if(menu==6){// buscar sin indice
+<<<<<<< HEAD
 					Header head;
 					ifstream in("cliente.bin",ios::binary|ios::in);
 			
@@ -260,6 +265,8 @@
 					}
 					in.close();
 
+=======
+>>>>>>> 4079f5caa7216d9493d775e83c5492c3aa06ecba
 
 				}else if(menu==7){ // Reindexar
 
