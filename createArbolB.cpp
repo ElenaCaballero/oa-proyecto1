@@ -183,24 +183,6 @@ int menu();
 std::string itoa(int, int);
 
 int main(){
-	char h[10];
-	strcpy(h,"hello");
-	char i[10];
-	strcpy(i,"iguana");
-	char j[10];
-	strcpy(j,"jaguar");
-	char k[10];
-	strcpy(h,"koala");
-	char l[10];
-	strcpy(h,"leon");
-	BTree t;
-	t.insertar(h);
-	t.insertar(i);
-	t.insertar(j);
-	t.insertar(k);
-	t.insertar(l);
-	t.inorder();
-	cout << endl;
 
 	int op = menu();
 	if (op == 1){
@@ -298,3 +280,4 @@ int menu(){
 	cin >> op;
 	return op;
 }
+
