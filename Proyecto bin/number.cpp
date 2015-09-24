@@ -15,7 +15,7 @@ int main(int argc, char const *argv[]){
 	ifstream infile; 
    	infile.open("MOCK_DATA-3.txt"); 
 
-   	ifstream infile2;
+   	ifstream infile2; 
    	infile2.open("mock.txt");
 
    	ofstream outfile;

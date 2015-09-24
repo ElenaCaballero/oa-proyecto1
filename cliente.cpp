@@ -32,7 +32,11 @@
 			cout << "6. Buscar sin indice  " << endl;
 			cout << "7. Reindexar  " << endl;
 			
+<<<<<<< HEAD
+			cout << "8. Salir" << endl;
+=======
 			cout << "9. Salir" << endl;
+>>>>>>> 4079f5caa7216d9493d775e83c5492c3aa06ecba
 			cout << endl << "Opcion? ";
 			int menu;
 			cin>>menu;
@@ -231,6 +235,38 @@
 				
 
 				}else if(menu==6){// buscar sin indice
+<<<<<<< HEAD
+					Header head;
+					ifstream in("cliente.bin",ios::binary|ios::in);
+			
+					in.read(reinterpret_cast<char*>(&(head.avail)), sizeof(int));
+					in.read(reinterpret_cast<char*>(&(head.number)), sizeof(int));
+					cout << head.avail <<" "<< head.number<<endl;
+					
+			
+					in.seekg(8,ios::beg);      
+			
+					Cliente cliente;
+					//ifstream in("lineas.bin",ios::binary|ios::in);
+					while(in.read(reinterpret_cast<char*>(&cliente), sizeof(cliente))){
+						
+
+				
+					char temp [20];
+
+					cout<<"Ingrese el numero a buscar"<<endl;
+					cin>>temp;
+						if (strcmp(temp,cliente.idCliente)==0)
+						{
+							cout << cliente.idCliente<<" "<<cliente.nombre<<cliente.genero<<" "<<cliente.idcity<<endl;
+						}
+				
+						
+					}
+					in.close();
+
+=======
+>>>>>>> 4079f5caa7216d9493d775e83c5492c3aa06ecba
 
 				}else if(menu==7){ // Reindexar
 

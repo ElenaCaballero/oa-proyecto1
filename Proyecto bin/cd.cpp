@@ -20,12 +20,15 @@ istream& operator>>(istream& input, Ciudad& item){
 int main(int argc, char const *argv[]){
 	int cont;
 	Ciudad item;
+	ofstream out;
+	out.open("ciudades.txt");
 	ifstream file("ciudad.bin", ifstream::binary);
 	while(file.read(reinterpret_cast<char*>(&item), sizeof(item))){
-		
+		out << item << "\n";
 		cout << item << endl;
 	}
 	
+	out.close();
 	file.close();
 
 	return 0;

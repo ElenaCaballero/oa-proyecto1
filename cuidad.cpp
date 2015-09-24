@@ -146,6 +146,15 @@
 					
 			
 					in.seekg(8,ios::beg);      
+<<<<<<< HEAD
+			
+					Ciudad ciudad;
+					while(in.read(reinterpret_cast<char*>(& ciudad), sizeof(ciudad))){
+				
+						cout << ciudad.id<<" entro "<<ciudad.nombre<<endl;
+	
+					}
+=======
 					//falta que no lea negativo
 					Ciudad ciudad;
 					while(in.read(reinterpret_cast<char*>(& ciudad), sizeof(ciudad))){
@@ -156,6 +165,7 @@
 					}
 						
 					}
+>>>>>>> 4079f5caa7216d9493d775e83c5492c3aa06ecba
 					in.close();
 
 				}else if(menu==4){ // Modificar
@@ -192,7 +202,10 @@
 							out.close();
 						}
 						in.close();	           					
+<<<<<<< HEAD
+=======
 						           		           					
+>>>>>>> 4079f5caa7216d9493d775e83c5492c3aa06ecba
 						           					
 
 				}else if(menu==5){
@@ -200,6 +213,8 @@
 				
 
 				}else if(menu==6){// buscar sin indice
+<<<<<<< HEAD
+=======
 					Header head;
 					ifstream in("ciudades.bin",ios::binary|ios::in);
 			
@@ -222,6 +237,7 @@
 						
 					}
 					in.close();
+>>>>>>> 4079f5caa7216d9493d775e83c5492c3aa06ecba
 
 				}else if(menu==7){ // Reindexar
 
