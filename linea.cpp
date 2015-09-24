@@ -160,15 +160,48 @@
 			
 					linea_cliente linea;
 					//ifstream in("lineas.bin",ios::binary|ios::in);
-					while(!in.eof()){
-						in.read(reinterpret_cast<char*>(&(linea.num)), 20);
-						in.read(reinterpret_cast<char*>(&(linea.id_cliente)), 20);
-						cout << linea.num<<" "<<linea.id_cliente<<endl;
+					while(in.read(reinterpret_cast<char*>(&linea), sizeof(linea))){
+						int num = atoi(linea.num);
+						if (num>0)
+						{
+							cout << linea.num<<" "<<linea.id_cliente<<endl;
+						}
+						
 					}
 					in.close();
 
 				}else if(menu==4){ // Modificar
-						           					
+					Header head;
+						linea_cliente linea; 
+						ifstream in("lineas.bin",ios::binary|ios::in);
+						in.read(reinterpret_cast<char*>(&(head.avail)), sizeof(int)); // leee el header
+						in.read(reinterpret_cast<char*>(&(head.number)), sizeof(int));
+						//
+						
+						cout<<"Ingrese posicion a Modificar"<<endl;
+						int rrn;
+						cin>>rrn;
+
+						if (rrn>head.number||rrn<0) // valida que el rrn o posicion a borrar sea valida
+						{
+							cout<<"La posicion ingresada no es valida"<<endl;
+						} else {
+	
+							int ecuacion;
+							ecuacion=8+(sizeof(linea)*(rrn-1)); // dara la poscion a donde se marcara
+							linea_cliente linea2;
+							in.seekg(ecuacion,ios::beg);
+							in.read(reinterpret_cast<char*>(&linea2), sizeof(linea));
+							cout<<"Ingrese nuedo ID de cliente"<<endl;
+							cin>>linea.id_cliente;
+							fstream out("lineas.bin",ios::binary|ios::out|ios::in);
+							out.seekp(ecuacion,ios::beg); //lo marca y pone el proximo lo sobre escribe
+							out.write(reinterpret_cast<char*>(&(linea2.num)), 20);
+							out.write(reinterpret_cast<char*>(&(linea.id_cliente)), 20);
+
+							out.close();
+						}
+						in.close();	           					
 						           					
 
 				}else if(menu==5){
@@ -176,6 +209,31 @@
 				
 
 				}else if(menu==6){// buscar sin indice
+					Header head;
+					ifstream in("lineas.bin",ios::binary|ios::in);
+			
+					in.read(reinterpret_cast<char*>(&(head.avail)), sizeof(int));
+					in.read(reinterpret_cast<char*>(&(head.number)), sizeof(int));
+					cout << head.avail <<" "<< head.number<<endl;
+					
+			
+					in.seekg(8,ios::beg);      
+			
+					linea_cliente linea;
+					//ifstream in("lineas.bin",ios::binary|ios::in);
+					char temp [20];
+
+					cout<<"Ingrese el numero a buscar"<<endl;
+					cin>>temp;
+					while(in.read(reinterpret_cast<char*>(&linea), sizeof(linea))){
+						
+						if (strcmp(temp,linea.num)==0)
+						{
+							cout << linea.num<<" "<<linea.id_cliente<<endl;
+						}
+						
+					}
+					in.close();
 
 				}else if(menu==7){ // Reindexar
 
